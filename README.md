@@ -24,6 +24,12 @@
 
 </div>
 
+## MRJ — Modular Research Jack
+
+> **Multi-Function ESP32 Hardware Toolkit**
+
+MRJ (Modular Research Jack) is a modular ESP32-based hardware toolkit designed for electronics research, experimentation, development, and learning.
+
 ## ✨ Overview
 
 MRJ V2 is a modular firmware project for **ESP32 DevKit V1 (30-pin)**.
