@@ -1,80 +1,170 @@
-# MRJ V2
+<div align="center">
+
+# 🟢 MRJ V2
+
+### ESP32 Security & Electronics Toolkit
+
+[![PlatformIO](https://img.shields.io/badge/PlatformIO-ESP32-orange?style=for-the-badge&logo=platformio)](https://platformio.org/)
+[![ESP32](https://img.shields.io/badge/Board-ESP32%20DevKit%20V1-blue?style=for-the-badge&logo=espressif)](https://www.espressif.com/)
+[![Display](https://img.shields.io/badge/Display-ST7735%20128%C3%97160-green?style=for-the-badge)](https://github.com/)
+[![Language](https://img.shields.io/badge/Language-C%2FC%2B%2B-lightgrey?style=for-the-badge&logo=cplusplus)](https://isocpp.org/)
+[![License](https://img.shields.io/badge/Use-Educational-yellow?style=for-the-badge)](https://github.com/)
+
+**MRJ V2 Team • ESP32 Firmware Project • Educational & Authorized Testing**
+
+</div>
 
 <p align="center">
-  <img src="mrj%20v2.png" alt="MRJ V2" width="420">
+  <img src="mrj v2.png" alt="MRJ V2 Pinout and Wiring Guide" width="720">
 </p>
 
-<p align="center">
-  <b>MRJ V2 — ESP32 Multi-Function Hardware Toolkit</b><br>
-  Modular firmware project for ESP32 with display, storage, wireless analysis, IR, RFID/NFC, iButton, GPIO and web features.
-</p>
+<div align="center">
 
----
+> **MRJ V2** is an ESP32-based electronics and security-testing toolkit designed for learning, hardware experimentation, and authorized testing on equipment you own or have permission to test.
 
-## ⚠️ Project Status
+</div>
 
-> **MRJ V2 is a hardware/firmware development project.**
->
-> Some modules depend on the exact hardware connected to the ESP32 and may require additional libraries or configuration before use.
+## ✨ Overview
 
----
+MRJ V2 is a modular firmware project for **ESP32 DevKit V1 (30-pin)**.
 
-## ✨ Features
+The project combines:
 
-### 🖥️ Display & User Interface
-- ST7735 TFT display support
-- Configurable display settings
-- Menu-based interface
-- Button input handling
-- Touch input support
-- Buzzer/audio feedback
+- 🖥️ **ST7735 TFT display**
+- 🎮 **4-button menu interface**
+- 💾 **SD card storage**
+- 📡 **Sub-GHz module support**
+- 📶 **Wi-Fi tools**
+- 🔵 **Bluetooth/BLE tools**
+- 📳 **NFC / RFID interfaces**
+- 🔑 **iButton / Dallas reader**
+- 🔴 **Infrared receiver/transmitter**
+- ⌨️ **USB/HID-related hardware interfaces**
+- 🔌 **GPIO control**
+- 🌐 **Web interface**
+- ⚙️ **Configuration and EEPROM management**
+- 📝 **Logging**
+- 🔄 **OTA update framework**
 
-### 💾 Storage & System
-- SD card support
-- EEPROM configuration management
-- Event/system logger
-- Reserved GPIO pin management
-- OTA firmware update support
+## 🖥️ Display Interface
 
-### 📡 Wi-Fi
-- Wi-Fi scanning
-- Wi-Fi information display
-- Web server interface
-- Network-related analysis modules
+The firmware is designed around a:
 
-### 🔵 Bluetooth / BLE
-- Bluetooth module support
-- BLE analysis module
-- BLE device information/analysis
+| Specification | Value |
+|---|---|
+| Driver | **ST7735** |
+| Resolution | **128 × 160** |
+| Size | **1.77 inch** |
+| Interface | **SPI** |
+| Rotation | **0** |
+| CS | GPIO 5 |
+| DC | GPIO 21 |
+| RST | GPIO 22 |
+| SCK | GPIO 18 |
+| MOSI | GPIO 23 |
+| MISO | GPIO 19 |
 
-### 📻 Sub-GHz
-- Sub-GHz transceiver interface
-- Signal analysis framework
-- Hardware-dependent frequency/protocol support
+### 🎮 Four-Button Navigation
 
-### 🪪 NFC & RFID
-- NFC module interface
-- NFC analysis framework
-- RFID module interface
-- 125 kHz RFID support
+| Button | GPIO | Function |
+|---|---:|---|
+| ▲ UP | 32 | Move up |
+| ▼ DOWN | 33 | Move down |
+| OK / SELECT | 25 | Select |
+| ↩ BACK | 34 | Return |
+
+The display/menu layout is implemented by the firmware rather than being a separate mockup.
+
+## 📋 Main Menu
+
+The firmware menu is organized into modules such as:
+
+```text
+MRJ V2
+├── Nethercap / Network Tools
+├── Wi-Fi Tools
+├── BLE Tools
+├── Sub-GHz
+├── NFC
+├── RFID
+├── iButton
+├── IR Remote
+├── BadUSB / HID
+├── GPIO Control
+├── Web Server
+├── SD Card
+└── Settings
+```
+
+> ⚠️ Some modules require additional hardware. Availability depends on the installed module and the corresponding firmware configuration.
+
+## 🔧 Supported Hardware / Modules
+
+### 🖥️ Display
+- ST7735 TFT 1.77"
+- 128×160 resolution
+- SPI interface
+
+### 💾 Storage
+- MicroSD card
+- SPI/HSPI storage interface
+- Configuration and log storage
+
+### 📡 Sub-GHz
+- CC1101-compatible hardware
+- SPI interface
+- Frequency support depends on the hardware, firmware configuration, and local regulations
+
+### 📳 NFC
+- PN532
+- I²C mode
+- Compatible NFC/tag operations supported by the firmware
+
+### 🪪 RFID
+- MFRC522
+- 125 kHz RFID hardware such as EM4100-compatible readers
+- Module selection is required when resources are shared
 
 ### 🔑 iButton
-- iButton reader interface
-- iButton data handling
+- Dallas/iButton reader
+- 1-Wire interface
 
-### 📺 Infrared
-- IR remote interface
-- IR signal decoding
-- IR signal handling
+### 🔴 Infrared
+- IR receiver
+- IR transmitter
+- Remote-control related functions
 
-### 🔌 GPIO & USB/HID
-- GPIO control
-- CH9326 interface
-- BadUSB/HID framework
+### 📶 Wi-Fi / BLE
+- ESP32 built-in Wi-Fi
+- ESP32 Bluetooth/BLE
+- Scanner and analysis-oriented modules
 
-> Use USB/HID functionality only on devices and systems where you have permission to test.
+### 🔌 GPIO
+- Digital input/output control
+- Hardware testing
+- Pin-state monitoring
 
----
+## 🔀 Pin-Sharing Architecture
+
+MRJ V2 uses a **shared-pin architecture** for selected optional modules.
+
+```text
+                 MRJ V2 PIN-SHARING
+                         │
+             ┌───────────┴───────────┐
+             │                       │
+          TEAM A                  TEAM B
+             │                       │
+       CH9326 + CC1101          NFC + RFID
+             │                       │
+             └──── Shared GPIO ──────┘
+```
+
+**Team A** and **Team B** are groups of modules that share GPIO resources. They are designed to operate **alternately, never simultaneously**.
+
+This architecture allows multiple optional modules to be supported while reducing the number of dedicated GPIO pins required.
+
+> ⚠️ Always verify the actual pin definitions in `hardware_pinout.h` before connecting hardware.
 
 ## 📁 Project Structure
 
@@ -89,9 +179,11 @@ mrj_fw_v2/
 │   │
 │   ├── display.h
 │   ├── display.cpp
+│   ├── menu.h
+│   ├── menu.cpp
+│   │
 │   ├── reserved_pins.h
 │   ├── reserved_pins.cpp
-│   │
 │   ├── eeprom_manager.h
 │   ├── eeprom_manager.cpp
 │   ├── buzzer.h
@@ -103,12 +195,15 @@ mrj_fw_v2/
 │   │
 │   ├── web_server.h
 │   ├── web_server.cpp
+│   ├── ota_update.h
+│   ├── ota_update.cpp
+│   │
+│   ├── wifi_scanner.h
+│   ├── wifi_scanner.cpp
 │   ├── wifi_deauth.h
 │   ├── wifi_deauth.cpp
 │   ├── nethercap_core.h
 │   ├── nethercap_core.cpp
-│   ├── wifi_scanner.h
-│   ├── wifi_scanner.cpp
 │   │
 │   ├── ble_module.h
 │   ├── ble_module.cpp
@@ -143,14 +238,7 @@ mrj_fw_v2/
 │   ├── ch9326.cpp
 │   │
 │   ├── gpio_control.h
-│   ├── gpio_control.cpp
-│   ├── touch_driver.h
-│   ├── touch_driver.cpp
-│   │
-│   ├── ota_update.h
-│   ├── ota_update.cpp
-│   ├── menu.h
-│   └── menu.cpp
+│   └── gpio_control.cpp
 │
 ├── data/
 │   └── index.html
@@ -158,165 +246,134 @@ mrj_fw_v2/
 └── README.md
 ```
 
----
+## 📦 Required Libraries
 
-## 🧩 Module Overview
+The exact dependencies are defined in **`platformio.ini`**.
 
-| Module | Purpose |
+Typical project components include:
+
+| Component | Purpose |
 |---|---|
-| `display` | Display rendering and UI |
-| `menu` | Main menu and navigation |
-| `buzzer` | Audio feedback |
-| `eeprom_manager` | Persistent configuration |
-| `sd_card` | SD card storage |
-| `logger` | System/event logging |
-| `web_server` | Local web interface |
-| `wifi_scanner` | Wi-Fi scanning |
-| `ble_module` | Bluetooth/BLE hardware interface |
-| `ble_analyzer` | BLE analysis |
-| `subghz` | Sub-GHz hardware interface |
-| `subghz_analyzer` | Sub-GHz analysis |
-| `nfc_module` | NFC hardware interface |
-| `nfc_analyzer` | NFC analysis |
-| `rfid_module` | RFID hardware interface |
-| `rfid_125khz` | 125 kHz RFID interface |
-| `ibutton` | iButton interface |
-| `ir_remote` | Infrared remote interface |
-| `ir_decoder` | Infrared decoding |
-| `gpio_control` | GPIO management |
-| `touch_driver` | Touch input |
-| `ch9326` | CH9326 interface |
-| `badusb` | USB/HID framework |
-| `ota_update` | OTA firmware update |
-| `reserved_pins` | GPIO reservation management |
+| Adafruit GFX | Graphics primitives and text |
+| Adafruit ST7735 | ST7735 TFT driver |
+| SPI | Display/module communication |
+| WiFi | ESP32 Wi-Fi functionality |
+| WebServer | Local web interface |
+| Preferences / EEPROM | Configuration storage |
+| SD / FS | File and SD-card handling |
+| Bluetooth / BLE | ESP32 Bluetooth functionality |
+| Wire | I²C communication |
+| PN532 library | NFC hardware support |
+| MFRC522 library | RFID hardware support |
 
----
+> **Tip:** Use PlatformIO to resolve libraries from `platformio.ini` whenever possible.
 
-## 🛠️ Build Environment
+## 🛠️ Build With PlatformIO
 
-MRJ V2 is designed around:
+### 1. Clone the repository
 
-- **Platform:** ESP32
-- **Framework:** Arduino
-- **Build system:** PlatformIO
-- **Language:** C/C++
-- **Main firmware:** `src/MRJ_FW_V2.ino`
+```bash
+git clone https://github.com/j42844343-byte/mrj_v2-.git
+cd mrj_v2-
+```
 
-Build with:
+### 2. Build
 
 ```bash
 pio run
 ```
 
-Upload with:
+### 3. Upload
+
+Connect the ESP32 by USB and run:
 
 ```bash
-pio run --target upload
+pio run -t upload
 ```
 
-Serial monitor:
+### 4. Serial Monitor
 
 ```bash
-pio device monitor
+pio device monitor -b 115200
 ```
 
----
+## 🧩 Configuration
 
-## ⚙️ Configuration
+Before connecting optional modules:
 
-Hardware and firmware configuration should be checked before compiling.
+1. Check `src/config.h`
+2. Check `src/hardware_pinout.h`
+3. Check `src/reserved_pins.h`
+4. Verify voltage levels
+5. Verify SPI/I²C/UART connections
+6. Make sure shared-pin modules are not enabled simultaneously
 
-Main configuration files:
+## 🧪 Development
+
+The firmware is separated into modules so individual hardware functions can be developed and tested independently.
 
 ```text
-src/config.h
-src/hardware_pinout.h
-platformio.ini
+MRJ_FW_V2.ino
+      │
+      ├── Config
+      ├── Hardware Pinout
+      ├── Display
+      ├── Menu
+      ├── Storage
+      ├── Logging
+      ├── Network
+      ├── BLE
+      ├── Sub-GHz
+      ├── NFC / RFID
+      ├── iButton
+      ├── IR
+      ├── HID
+      └── GPIO
 ```
 
-Make sure the selected GPIO pins match the actual hardware connected to your ESP32.
-
----
-
-## 🔧 Hardware
-
-A typical MRJ V2 build can include:
-
-- ESP32 development board
-- TFT/OLED display
-- Navigation buttons
-- Buzzer
-- SD card module
-- NFC/RFID hardware
-- iButton interface
-- IR receiver/transmitter
-- Sub-GHz transceiver
-- Touch sensor
-- Optional CH9326 USB/HID hardware
-
-Exact hardware requirements depend on which modules are enabled.
-
----
-
-## 📌 Safety & Responsible Use
+## ⚠️ Safety & Authorized Use
 
 MRJ V2 is intended for:
 
-- electronics learning
-- firmware development
-- hardware testing
-- authorized security research
-- laboratory environments
-- analysis of devices you own or have permission to test
+- Educational electronics projects
+- Firmware development
+- Hardware testing
+- Research in controlled environments
+- Security testing on systems you own or are explicitly authorized to test
 
-Do not use wireless, RFID/NFC, IR, USB/HID, or network functionality to interfere with systems, access devices without authorization, or disrupt other users.
+**Do not use the firmware to interfere with networks, devices, communications, credentials, or other systems without authorization.**
 
----
+Follow applicable laws and radio regulations when using wireless hardware.
 
-## 🚀 Development
+## 🤝 MRJ V2 Team
 
-The project is organized into separate `.h` and `.cpp` modules so individual hardware features can be developed and tested independently.
+**MRJ V2 Team**
 
-Recommended development flow:
+Built for:
 
-```text
-Hardware
-   ↓
-Pin configuration
-   ↓
-Module driver
-   ↓
-Analyzer / controller
-   ↓
-Menu
-   ↓
-Display / Web UI
-   ↓
-MRJ V2 firmware
-```
+> **Learning • Electronics • Firmware • Research • Innovation**
 
----
+## 📜 Project Status
 
-## 👥 MRJ V2 Team
+> 🚧 **Development project**
 
-**By MRJ V2 Team**
+Features and hardware support may change as the firmware evolves.
 
-Firmware, hardware integration, UI, testing, and development are organized as a modular open project.
+## ⭐ Credits
 
----
+- ESP32 ecosystem
+- PlatformIO
+- Arduino framework
+- Adafruit graphics/display ecosystem
+- Open-source hardware/software contributors
+- **MRJ V2 Team**
 
-## 📜 License
+<div align="center">
 
-Choose and add an appropriate license before distributing the project publicly.
+### 🟢 MRJ V2
 
-If this repository contains third-party libraries, follow the license terms of each dependency.
+**ESP32 Security & Electronics Toolkit**
 
----
+**Educational • Research • Authorized Testing**
 
-## ⭐ MRJ V2
-
-**Build • Learn • Test • Create**
-
-<p align="center">
-  <b>MRJ V2 Team</b>
-</p>
+</div>
