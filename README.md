@@ -1,440 +1,483 @@
-MRJ V2 — ESP32 Security & Electronics Toolkit
+# MRJ V2
 
-"MRJ V2" (mrj%20v2.png)
+<p align="center">
+  <img src="mrj%20v2.png" alt="MRJ V2" width="700">
+</p>
 
-MRJ V2 Team
+<h3 align="center">MRJ V2 — ESP32 Security & Electronics Toolkit</h3>
 
-MRJ V2 adalah firmware berbasis ESP32 DevKit V1 (30-pin) yang menggabungkan berbagai modul elektronik, display, storage, komunikasi, dan fitur pengujian keamanan dalam satu perangkat portabel.
+<p align="center">
+  Modular ESP32 firmware for electronics development, hardware testing, diagnostics, and authorized security research.
+</p>
 
-«Educational & authorized security testing only.
-Gunakan perangkat hanya pada sistem, jaringan, kartu, dan perangkat yang memang kamu miliki atau memiliki izin untuk menguji.»
+## About
 
----
+MRJ V2 is a modular firmware project for the ESP32 DevKit V1.
 
-✨ Fitur Utama
+The project combines display, storage, wireless communication, NFC, RFID, infrared, iButton, GPIO, web interface, OTA update, logging, and other hardware modules into one firmware architecture.
 
-🖥️ Display
+> Educational and authorized security testing only.
+>
+> Use MRJ V2 only with devices, networks, cards, tags, radios, and systems that you own or have explicit permission to test.
 
-- TFT ST7735 1.77" 128×160
-- Antarmuka menu berbasis TFT
-- Dukungan grafik melalui Adafruit GFX
-- Dukungan OLED sebagai display alternatif/cadangan
+## Features
 
-💾 Storage
+### Display
 
-- SD Card
-- Penyimpanan konfigurasi
-- Penyimpanan file/log yang diperlukan firmware
-- HSPI dedicated untuk SD Card
+- TFT ST7735 1.77" 128x160
+- SPI display support
+- Graphical user interface
+- Menu system
+- Status screens
+- Hardware information
+- OLED alternative display support
+- Adafruit GFX graphics support
 
-📡 NFC
+### Storage
 
-- PN532
-- Mode I2C
-- Pembacaan NFC/tag yang kompatibel
-- IRQ opsional
+- SD card support
+- Configuration storage
+- File storage
+- Log storage
+- Firmware data storage
+- SD card management
 
-🆔 RFID
+### Configuration
 
-- MFRC522
-- RFID 125 kHz EM4100 melalui UART
-- Sistem pemilihan modul agar perangkat yang berbagi pin tidak aktif bersamaan
+- EEPROM configuration manager
+- Persistent settings
+- Hardware configuration
+- Reserved GPIO management
+- Central configuration system
 
-📻 Sub-GHz
+### Wi-Fi
 
-- CC1101
-- Antarmuka VSPI
-- Dukungan fungsi komunikasi/pengujian radio yang sesuai perangkat dan regulasi
-- GDO0 tersedia untuk kebutuhan firmware
+- ESP32 Wi-Fi support
+- Wi-Fi scanner
+- Access point information
+- Network information
+- Wireless diagnostics
+- Web server integration
+- Controlled wireless testing components
 
-🔴 Infrared
+### BLE
 
-- IR Receiver
-- IR Transmitter
-- Receiver menggunakan GPIO 36
-- Transmitter menggunakan GPIO 12
+- Bluetooth support
+- BLE module management
+- BLE device analysis
+- BLE information
+- BLE diagnostics
 
-🔑 iButton
+### Sub-GHz
+
+- CC1101 support
+- VSPI interface
+- Radio module management
+- GDO support
+- Sub-GHz diagnostics
+- Signal analysis framework
+
+Use only legal frequencies and authorized radio equipment.
+
+### NFC
+
+- PN532 support
+- I2C communication
+- NFC/tag reading
+- NFC module management
+- Optional IRQ support
+- NFC analysis
+
+### RFID
+
+- MFRC522 support
+- SPI communication
+- RFID module management
+- RFID card/tag interaction
+- 125 kHz RFID support
+- EM4100-related RFID support
+- UART RFID interface
+
+### Infrared
+
+- IR receiver
+- IR transmitter
+- IR decoder
+- IR remote functions
+- GPIO-based IR interface
+- Signal analysis
+
+### iButton
 
 - Dallas/iButton reader
-- 1-Wire
-- GPIO 2 sebagai data
-
-🔊 Buzzer
-
-- Buzzer aktif/passif
-- PWM melalui GPIO 13
-- Dapat digunakan untuk notifikasi suara sederhana
-
-🔘 Tombol
-
-- UP → GPIO 32
-- DOWN → GPIO 33
-- SELECT → GPIO 25
-- BACK → GPIO 34
-
-Sistem tombol menggunakan konsep pull-up dan tombol aktif ketika terhubung ke GND.
-
-🌐 Wi-Fi / Web Interface
-
-- ESP32 Wi-Fi
-- Web dashboard
-- Access Point
-- Konfigurasi melalui browser
-- OTA/update support sesuai implementasi firmware
-
-🟦 BLE
-
-- BLE scanning
-- Informasi perangkat BLE yang terdeteksi
-- Fitur pengujian hanya untuk perangkat/lingkungan yang diizinkan
+- iButton interface
+- Device identification
+- Reader management
 
----
+### GPIO
 
-🔌 ESP32 Pinout
+- Digital input
+- Digital output
+- GPIO testing
+- Pin monitoring
+- GPIO control
+- Reserved-pin protection
 
-Left Side
+### Touch
 
-GPIO| Fungsi
-3V3| Power
-EN| Reset
-GPIO 36| IR Receiver
-GPIO 39| Shared UART RX
-GPIO 34| BTN BACK
-GPIO 35| NFC IRQ
-GPIO 32| BTN UP
-GPIO 33| BTN DOWN
-GPIO 25| BTN SELECT
-GPIO 26| SD MISO
-GPIO 27| SD MOSI
-GPIO 14| SD SCK
-GPIO 12| IR Transmitter
-GND| Ground
-GPIO 13| Buzzer PWM
+- Touch driver
+- Touch input
+- Menu interaction
+- Hardware input handling
 
-Right Side
+### Buzzer
 
-GPIO| Fungsi
-GND| Ground
-GPIO 23| VSPI MOSI
-GPIO 22| TFT RST
-GPIO 1| UART0 TX
-GPIO 3| Shared control
-GPIO 21| TFT DC
-GPIO 19| VSPI MISO
-GPIO 18| VSPI SCK
-GPIO 5| TFT CS
-GPIO 17| NFC SCL
-GPIO 16| NFC SDA
-GPIO 4| SD CS
-GPIO 0| Shared CS
-GPIO 2| iButton
-GPIO 15| Shared UART TX
+- Buzzer driver
+- System notifications
+- Menu feedback
+- Status sounds
+- Error alerts
 
----
+### Web Server
 
-🖥️ TFT ST7735 Wiring
+- ESP32 web server
+- Browser interface
+- Device information
+- Configuration interface
+- Firmware management
+- Web-based controls
 
-TFT| ESP32
-VCC| 3.3V
-GND| GND
-SCK| GPIO 18
-MISO| GPIO 19
-MOSI| GPIO 23
-CS| GPIO 5
-DC| GPIO 21
-RST| GPIO 22
-LED/BL| 3.3V / sesuai modul
+### OTA
 
-«⚠️ Periksa spesifikasi modul TFT sebelum memberikan tegangan. Jangan mengasumsikan semua breakout memiliki input 5V yang aman.»
+- Over-The-Air update framework
+- Firmware update management
+- Update status
+- Remote firmware management
 
----
+### Logging
 
-💾 SD Card Wiring
+- System logs
+- Debug messages
+- Error messages
+- Module status
+- SD-card logging
 
-SD| ESP32
-GND| GND
-SCK| GPIO 14
-MISO| GPIO 26
-MOSI| GPIO 27
-CS| GPIO 4
-VCC| Sesuai spesifikasi modul
+### Menu
 
----
+- Main menu
+- Module menus
+- Navigation
+- Configuration screens
+- Hardware status
+- Feature selection
 
-📡 PN532 Wiring
+### USB / HID
 
-Mode: I2C
+- USB/HID testing framework
+- CH9326 interface
+- UART communication
+- HID-related hardware support
 
-PN532| ESP32
-VCC| 3.3V / sesuai modul
-GND| GND
-SDA| GPIO 16
-SCL| GPIO 17
-IRQ| GPIO 35
+## Project Structure
 
-Pastikan jumper/switch PN532 diatur ke mode I2C.
-
----
-
-🔴 IR Wiring
-
-Receiver
-
-Receiver| ESP32
-VCC| 3.3V
-GND| GND
-OUT| GPIO 36
-
-Transmitter
-
-GPIO 12 digunakan sebagai output transmitter. Untuk LED IR berarus lebih tinggi, gunakan driver transistor yang sesuai.
-
----
-
-🔑 iButton
-
-iButton| ESP32
-DATA| GPIO 2
-GND| GND
-VCC| Sesuai metode/modul
-
-GPIO 2 digunakan sebagai jalur 1-Wire.
-
----
-
-🔊 Buzzer
-
-Buzzer| ESP32
-+| GPIO 13
--| GND
-
-Untuk buzzer yang membutuhkan arus lebih besar, gunakan transistor driver.
-
----
-
-🔘 Button Pinout
-
-Button| GPIO
-UP| 32
-DOWN| 33
-SELECT| 25
-BACK| 34
-
----
-
-⚔️ Shared Pin Architecture
-
-MRJ V2 memiliki beberapa modul yang berbagi jalur GPIO.
-
-Team A
-
-- CC1101
-- CH9326
-
-Team B
-
-- PN532
-- MFRC522
-- RFID 125 kHz
-
-Pin yang digunakan bersama antara beberapa modul perlu dikelola firmware sehingga perangkat yang tidak digunakan dilepas dari jalur GPIO.
-
-Shared GPIO:
-
-GPIO 0
-GPIO 3
-GPIO 15
-GPIO 39
-
-Konsep ini mencegah dua peripheral mencoba mengendalikan jalur yang sama secara bersamaan.
-
----
-
-📚 Library
-
-PlatformIO
-
-Library yang digunakan/diperlukan antara lain:
-
-olikraus/U8g2
-adafruit/Adafruit GFX Library
-adafruit/Adafruit ST7735 and ST7789 Library
-adafruit/Adafruit ILI9341
-adafruit/Adafruit ILI9488
-bblanchon/ArduinoJson
-me-no-dev/AsyncTCP
-me-no-dev/ESP Async WebServer
-
-Library ESP32/Arduino yang digunakan:
-
-WiFi
-SPI
-Wire
-EEPROM
-SD
-Update
-BLEDevice
-HardwareSerial
-
----
-
-📁 Project Structure
-
-mrj_v2-/
-│
-├── README.md
-├── mrj v2.png
+```text
+mrj_fw_v2/
 ├── platformio.ini
 │
 ├── src/
 │   ├── MRJ_FW_V2.ino
 │   ├── config.h
 │   ├── hardware_pinout.h
-│   ├── reserved_pins.h
 │   │
 │   ├── display.h
 │   ├── display.cpp
 │   │
-│   ├── eeprom.h
-│   ├── eeprom.cpp
+│   ├── reserved_pins.h
+│   ├── reserved_pins.cpp
 │   │
-│   ├── wifi/
-│   ├── nfc/
-│   ├── rfid/
-│   ├── cc1101/
-│   ├── ir/
-│   ├── ibutton/
-│   ├── sd/
-│   ├── ble/
-│   └── web/
+│   ├── eeprom_manager.h
+│   ├── eeprom_manager.cpp
+│   │
+│   ├── buzzer.h
+│   ├── buzzer.cpp
+│   │
+│   ├── sd_card.h
+│   ├── sd_card.cpp
+│   │
+│   ├── logger.h
+│   ├── logger.cpp
+│   │
+│   ├── web_server.h
+│   ├── web_server.cpp
+│   │
+│   ├── wifi_deauth.h
+│   ├── wifi_deauth.cpp
+│   │
+│   ├── nethercap_core.h
+│   ├── nethercap_core.cpp
+│   │
+│   ├── wifi_scanner.h
+│   ├── wifi_scanner.cpp
+│   │
+│   ├── ble_module.h
+│   ├── ble_module.cpp
+│   │
+│   ├── ble_analyzer.h
+│   ├── ble_analyzer.cpp
+│   │
+│   ├── subghz.h
+│   ├── subghz.cpp
+│   │
+│   ├── subghz_analyzer.h
+│   ├── subghz_analyzer.cpp
+│   │
+│   ├── nfc_module.h
+│   ├── nfc_module.cpp
+│   │
+│   ├── nfc_analyzer.h
+│   ├── nfc_analyzer.cpp
+│   │
+│   ├── rfid_module.h
+│   ├── rfid_module.cpp
+│   │
+│   ├── rfid_125khz.h
+│   ├── rfid_125khz.cpp
+│   │
+│   ├── ibutton.h
+│   ├── ibutton.cpp
+│   │
+│   ├── ir_remote.h
+│   ├── ir_remote.cpp
+│   │
+│   ├── ir_decoder.h
+│   ├── ir_decoder.cpp
+│   │
+│   ├── badusb.h
+│   ├── badusb.cpp
+│   │
+│   ├── ch9326.h
+│   ├── ch9326.cpp
+│   │
+│   ├── gpio_control.h
+│   ├── gpio_control.cpp
+│   │
+│   ├── touch_driver.h
+│   ├── touch_driver.cpp
+│   │
+│   ├── ota_update.h
+│   ├── ota_update.cpp
+│   │
+│   ├── menu.h
+│   └── menu.cpp
 │
-└── lib/
-    └── README.md
-
-«Struktur aktual dapat berbeda tergantung versi firmware yang berada di repository.»
-
----
-
-⚙️ PlatformIO Configuration
-
-Board utama:
-
+├── data/
+│   └── index.html
+│
+├── mrj v2.png
+│
+└── README.md
+Module Overview
+Module
+Function
+MRJ_FW_V2.ino
+Main firmware
+config.h
+Global configuration
+hardware_pinout.h
+Hardware pin definitions
+display
+TFT/OLED display system
+reserved_pins
+GPIO reservation
+eeprom_manager
+Persistent configuration
+buzzer
+Buzzer control
+sd_card
+SD card management
+logger
+System logging
+web_server
+Web interface
+wifi_deauth
+Controlled Wi-Fi testing component
+nethercap_core
+Network analysis core
+wifi_scanner
+Wi-Fi scanning
+ble_module
+Bluetooth/BLE management
+ble_analyzer
+BLE analysis
+subghz
+CC1101/Sub-GHz interface
+subghz_analyzer
+Sub-GHz analysis
+nfc_module
+PN532 NFC interface
+nfc_analyzer
+NFC analysis
+rfid_module
+MFRC522 RFID interface
+rfid_125khz
+125 kHz RFID interface
+ibutton
+iButton interface
+ir_remote
+IR transmit/receive
+ir_decoder
+IR decoding
+badusb
+USB/HID testing framework
+ch9326
+CH9326 interface
+gpio_control
+GPIO control
+touch_driver
+Touch input
+ota_update
+OTA updates
+menu
+User interface
+Architecture
+                         MRJ V2
+                           |
+             +-------------+-------------+
+             |             |             |
+           Display       Menu        Configuration
+             |             |             |
+             +-------------+-------------+
+                           |
+                    Hardware Manager
+                           |
+       +---------+---------+---------+---------+
+       |         |         |         |         |
+      Wi-Fi     BLE      NFC/RFID   IR     Sub-GHz
+       |         |         |         |         |
+       +---------+---------+---------+---------+
+                           |
+                    Storage / Logging
+                           |
+                    SD Card / EEPROM
+                           |
+                    Web Server / OTA
+Hardware
+Controller
 ESP32 DevKit V1
-
-Framework:
-
-Arduino
-
-Contoh environment:
-
+ESP32 30-pin board
+Arduino framework
+PlatformIO
+Supported Hardware
+Hardware
+Interface
+ST7735 TFT
+SPI
+OLED
+I2C
+SD Card
+SPI
+PN532
+I2C
+MFRC522
+SPI
+125 kHz RFID
+UART
+CC1101
+SPI
+IR Receiver
+GPIO
+IR Transmitter
+GPIO
+iButton
+GPIO
+Buzzer
+GPIO
+Touch Sensor
+GPIO
+CH9326
+UART
+Wi-Fi
+ESP32 internal
+BLE
+ESP32 internal
+Build Environment
+MRJ V2 is designed for PlatformIO.
+Example:
 [env:esp32dev]
 platform = espressif32
 board = esp32dev
 framework = arduino
 monitor_speed = 115200
 upload_speed = 921600
-
----
-
-🚀 Installation
-
-1. Clone repository
-
+Build
+Clone the repository:
 git clone https://github.com/j42844343-byte/mrj_v2-.git
 cd mrj_v2-
-
-2. Buka project
-
-Buka folder project menggunakan PlatformIO/VS Code.
-
-3. Hubungkan ESP32
-
-Hubungkan ESP32 DevKit V1 melalui USB.
-
-4. Build
-
-Jalankan:
-
+Build:
 pio run
-
-5. Upload
-
-Jalankan:
-
-pio run -t upload
-
-6. Serial Monitor
-
+Upload:
+pio run --target upload
+Serial monitor:
 pio device monitor
-
----
-
-📸 Hardware Reference
-
-Gambar pinout dan wiring utama:
-
-mrj v2.png
-
-File gambar harus berada di root repository agar README dapat menampilkannya.
-
----
-
-🛠️ Development
-
-MRJ V2 dikembangkan sebagai project elektronik/embedded untuk:
-
-- Eksperimen ESP32
-- Pembelajaran GPIO
-- SPI
-- I2C
-- UART
-- 1-Wire
-- TFT display
-- SD Card
-- NFC/RFID
-- Infrared
-- BLE
-- Wi-Fi
-- Integrasi berbagai modul hardware
-
----
-
-⚠️ Safety & Responsible Use
-
-MRJ V2 dapat berinteraksi dengan berbagai sistem radio, kartu, tag, USB/HID, dan jaringan.
-
-Gunakan hanya:
-
-- perangkat milik sendiri;
-- jaringan/lab yang memang kamu punya izin untuk uji;
-- tag/kartu yang memang kamu miliki atau diizinkan untuk diuji;
-- frekuensi radio sesuai aturan setempat.
-
-Jangan digunakan untuk mengakses, mengganggu, atau mengambil data dari perangkat orang lain tanpa izin.
-
----
-
-👥 MRJ V2 Team
-
+Upload web files:
+pio run --target uploadfs
+Development
+MRJ V2 uses a modular C/C++ architecture.
+Most modules use:
+module.h
+module.cpp
+The .h file defines the interface.
+The .cpp file contains the implementation.
+This structure makes the firmware easier to:
+Develop
+Debug
+Maintain
+Expand
+Replace hardware drivers
+Add new modules
+Disable unused modules
+Configuration Files
+Main configuration files:
+src/config.h
+src/hardware_pinout.h
+src/reserved_pins.h
+Always verify GPIO assignments before connecting hardware.
+Web Interface
+Web resources are stored in:
+data/
+└── index.html
+The ESP32 web server can provide a browser-based interface for supported device functions and configuration.
+Security Research
+MRJ V2 contains modules for educational and authorized security testing, including wireless analysis, BLE analysis, RFID/NFC analysis, infrared diagnostics, and hardware testing.
+Only test systems and devices for which you have permission.
+Do not use the firmware to interfere with third-party systems, networks, communications, or devices.
+Roadmap
+[ ] Improved graphical interface
+[ ] More display support
+[ ] Expanded NFC tools
+[ ] Expanded RFID tools
+[ ] Additional IR protocols
+[ ] Improved BLE diagnostics
+[ ] Expanded Sub-GHz diagnostics
+[ ] Better SD-card management
+[ ] Configuration backup
+[ ] Configuration restore
+[ ] Improved OTA interface
+[ ] Hardware diagnostics
+[ ] Module auto-detection
+[ ] More system information
+Credits
 MRJ V2 Team
+ESP32 Security & Electronics Toolkit
+Disclaimer
+MRJ V2 is provided for educational, electronics-development, and authorized security-testing purposes.
+The user is responsible for ensuring that their use of the firmware complies with applicable laws, regulations, and permissions.
+License
+Check the licenses of all third-party libraries used by the project before redistribution.
+MRJ V2 Team
+�
+MRJ V2 Team 
 
-Embedded Systems • ESP32 • Electronics • Security Research
-
----
-
-📄 License
-
-Tambahkan license yang sesuai dengan keputusan pengembang project ini.
-
----
-
-⭐ MRJ V2
-
-ESP32-based modular electronics & security testing platform
-
-MRJ V2
-ESP32 DevKit V1
-TFT + SD + NFC + RFID + IR + iButton + BLE + Wi-Fi
-
-Created by MRJ V2 Team
+�
+ESP32 Security & Electronics Toolkit 
+```
