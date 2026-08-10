@@ -1,0 +1,61 @@
+name: MRJ V2 - Build 14 ESP32 Firmware
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'displays/**'
+      - '.github/workflows/build.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        display:
+          - MRJ_OLED_096_SSD1306_128x64
+          - MRJ_OLED_13_SSD1306_128x64
+          - MRJ_OLED_15_SH1106_128x64
+          - MRJ_OLED_20_SSD1306_128x64
+          - MRJ_OLED_242_SH1106_128x64
+          - MRJ_TFT_13_ST7789_240x240
+          - MRJ_TFT_154_ST7789_240x240
+          - MRJ_TFT_18_ST7735_128x160
+          - MRJ_TFT_20_ST7789_240x320
+          - MRJ_TFT_24_ILI9341_240x320
+          - MRJ_TFT_24_ST7789_240x320
+          - MRJ_TFT_28_ILI9341_240x320
+          - MRJ_TFT_35_ILI9488_320x480
+          - MRJ_FW_V2_FIXED
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install PlatformIO
+        run: python -m pip install --upgrade platformio
+
+      - name: Build ${{ matrix.display }}
+        working-directory: displays/${{ matrix.display }}
+        run: pio run
+
+      - name: Collect firmware
+        if: always()
+        run: |
+          mkdir -p artifacts/${{ matrix.display }}
+          if [ -f "displays/${{ matrix.display }}/.pio/build/esp32dev/firmware.bin" ]; then
+            cp "displays/${{ matrix.display }}/.pio/build/esp32dev/firmware.bin"                "artifacts/${{ matrix.display }}/${{ matrix.display }}.bin"
+          fi
+          if [ -f "displays/${{ matrix.display }}/.pio/build/esp32dev/firmware.elf" ]; then
+            cp "displays/${{ matrix.display }}/.pio/build/esp32dev/firmware.elf"                "artifacts/${{ matrix.display }}/${{ matrix.display }}.elf"
+          fi
+
+      - name: Upload build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.display }}
+          path: artifacts/${{ matrix.display }}/
+          if-no-files-found: warn
