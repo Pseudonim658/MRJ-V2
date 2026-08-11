@@ -61,7 +61,7 @@ bool DisplayModule::initTFT() {
     tft->fillScreen(THEME_BG);
     driver = tft;
     initialized = true;
-    logger.log(LOG_INFO, "DISPLAY", "TFT initialized (%dx%d)", width, height);
+    { char msg[64]; snprintf(msg, sizeof(msg), "TFT initialized (%dx%d)", width, height); logger.log(LOG_INFO, "DISPLAY", msg); }
     return true;
 }
 #endif
