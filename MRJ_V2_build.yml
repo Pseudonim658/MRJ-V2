@@ -1,0 +1,91 @@
+name: MRJ V2 - Build ESP32 Firmware
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'displays/**'
+      - '.github/workflows/build.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build all MRJ V2 projects
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install PlatformIO
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --upgrade platformio
+
+      - name: Find MRJ V2 PlatformIO projects
+        shell: bash
+        run: |
+          set -e
+          find displays -type f -name platformio.ini -print
+          count=$(find displays -type f -name platformio.ini | wc -l)
+          if [ "$count" -eq 0 ]; then
+            echo "::error::No platformio.ini files were found under displays/"
+            exit 1
+          fi
+          echo "Found $count PlatformIO projects."
+
+      - name: Build every display project
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p artifacts
+          failed=0
+          built=0
+
+          while IFS= read -r -d '' ini; do
+            project_dir="$(dirname "$ini")"
+            project_name="$(basename "$project_dir")"
+
+            echo "========================================"
+            echo "BUILD: $project_name"
+            echo "PATH : $project_dir"
+            echo "========================================"
+
+            if pio run -d "$project_dir"; then
+              built=$((built + 1))
+              bin="$(find "$project_dir/.pio/build" -type f -name 'firmware.bin' -print -quit 2>/dev/null || true)"
+
+              if [ -n "$bin" ]; then
+                mkdir -p "artifacts/$project_name"
+                cp "$bin" "artifacts/$project_name/${project_name}.bin"
+              else
+                echo "::warning::$project_name built successfully, but firmware.bin was not found."
+              fi
+            else
+              failed=$((failed + 1))
+              echo "::error::Build failed: $project_name"
+            fi
+          done < <(find displays -type f -name platformio.ini -print0)
+
+          echo "Successful: $built"
+          echo "Failed: $failed"
+
+          if [ "$failed" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Upload all successful BIN files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: MRJ-V2-firmware-bins
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 7
