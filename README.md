@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="mrj_v2.jpg" alt="MRJ FW V2 Logo" width="160"/>
+<img src="mrj_v2.jpg" alt="MRJ FW V2 Logo" width="420"/>
 
 # ⚡ MRJ FW V2
 
