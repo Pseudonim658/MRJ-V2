@@ -1,0 +1,3 @@
+# OLED_20_SSD1306_128x64
+Flag: -DMRJ_DISPLAY_SSD1306_20 (128x64)
+Compile: ./compile.sh

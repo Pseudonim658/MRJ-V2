@@ -1,0 +1,3 @@
+# OLED_15_SH1106_128x64
+Flag: -DMRJ_DISPLAY_SH1106_15 (128x64)
+Compile: ./compile.sh
