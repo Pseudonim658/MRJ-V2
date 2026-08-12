@@ -117,29 +117,123 @@ Individual display projects may contain files such as:
 
 ## 🔌 Pinout
 
-### OLED — I²C
+> Pin di bawah ini adalah pin yang **benar-benar dipakai oleh kode asli MRJ FW V2**, berdasarkan blok `UNIVERSAL PINOUT` pada source. OLED memakai GPIO 16/17, bukan GPIO 21/22.
 
-| ESP32 GPIO | Function |
+### Pin umum semua varian
+
+| Fungsi | Macro kode | GPIO |
+|---|---|---:|
+| Tombol atas | `BTN_UP` | 32 |
+| Tombol bawah | `BTN_DOWN` | 33 |
+| Tombol pilih | `BTN_SELECT` | 25 |
+| Tombol kembali | `BTN_BACK` | 34 |
+| Buzzer | `BUZZER_PIN` | 13 |
+| IR receiver | `IR_RECV_PIN` | 36 |
+| IR transmitter | `IR_SEND_PIN` | 12 |
+| iButton | `IBUTTON_PIN` | 2 |
+| ADC baterai | `ADC_BATTERY_PIN` | 37 |
+| NeoPixel | `NEOPIXEL_PIN` | `-1` (tidak digunakan) |
+
+### SD Card — bus HSPI
+
+| Fungsi | Macro kode | GPIO |
+|---|---|---:|
+| SD clock | `HSPI_SCK` | 14 |
+| SD MISO | `HSPI_MISO` | 26 |
+| SD MOSI | `HSPI_MOSI` | 27 |
+| SD chip select | `SD_CS` | 4 |
+
+### TFT — bus VSPI (termasuk TFT 1.77 ST7735/ST7735S)
+
+Kode TFT memakai bus **VSPI** dan membutuhkan sistem eksklusif Tim A/B karena jalur VSPI dapat dipakai bersama modul lain.
+
+| Fungsi | Macro kode | GPIO |
+|---|---|---:|
+| TFT clock | `DISPLAY_SCK` / `VSPI_SCK` | 18 |
+| TFT MISO | `DISPLAY_MISO` / `VSPI_MISO` | 19 |
+| TFT MOSI | `DISPLAY_MOSI` / `VSPI_MOSI` | 23 |
+| TFT chip select | `DISPLAY_CS` | 5 |
+| TFT data/command | `DISPLAY_DC` | 21 |
+| TFT reset | `DISPLAY_RST` | 22 |
+| TFT backlight | `DISPLAY_BL` | `-1` (tidak dikontrol GPIO) |
+
+Pada `display.cpp`, pin tersebut dipakai seperti ini:
+
+```cpp
+SPI.begin(VSPI_SCK, VSPI_MISO, VSPI_MOSI, DISPLAY_CS);
+Adafruit_ST7735* tft =
+    new Adafruit_ST7735(DISPLAY_CS, DISPLAY_DC, DISPLAY_RST);
+```
+
+**Modul TFT yang default-nya dinonaktifkan** (`-1`): `CC1101_CS`, `CC1101_GDO0`, `CC1101_GDO2`, `RFID_CS`, `RFID_RST`, `CH9326_TX`, `CH9326_RX`, `RFID125_RX`, `RFID125_TX`, `TOUCH_CS`, `TOUCH_IRQ`.
+
+**NFC pada varian TFT**
+
+| Fungsi | Macro kode | GPIO |
+|---|---|---:|
+| NFC SDA | `NFC_SDA` | 16 |
+| NFC SCL | `NFC_SCL` | 17 |
+| NFC IRQ | `NFC_IRQ` | 35 |
+
+### OLED — SSD1306 dan SH1106 (I²C)
+
+OLED memakai bus I²C dan **tidak menggunakan mutex Tim A/B**.
+
+| Fungsi | Macro kode | GPIO/Nilai |
+|---|---|---:|
+| OLED SDA | `DISPLAY_SDA` | 16 |
+| OLED SCL | `DISPLAY_SCL` | 17 |
+| OLED reset | `DISPLAY_RST` | `-1` |
+| OLED I²C address | `DISPLAY_I2C_ADDR` | `0x3C` |
+
+Pada `display.cpp`, OLED dipanggil dengan:
+
+```cpp
+Wire.begin(DISPLAY_SDA, DISPLAY_SCL);
+```
+
+Karena OLED memakai GPIO 16 dan 17, bus VSPI tetap bebas untuk modul lain:
+
+| Fungsi VSPI | Macro kode | GPIO |
+|---|---|---:|
+| VSPI clock | `VSPI_SCK` | 18 |
+| VSPI MISO | `VSPI_MISO` | 19 |
+| VSPI MOSI | `VSPI_MOSI` | 23 |
+
+**Modul yang aktif pada konfigurasi OLED**
+
+| Modul | Macro | GPIO |
+|---|---|---:|
+| CC1101 CS | `CC1101_CS` | 5 |
+| RFID 13.56 MHz CS | `RFID_CS` | 15 |
+| RFID 13.56 MHz reset | `RFID_RST` | 21 |
+| CH9326 TX | `CH9326_TX` | 22 |
+| CH9326 RX | `CH9326_RX` | 35 |
+| RFID 125 kHz RX | `RFID125_RX` | 39 |
+| RFID 125 kHz TX | `RFID125_TX` | `-1` |
+| Touch CS | `TOUCH_CS` | `-1` |
+| Touch IRQ | `TOUCH_IRQ` | `-1` |
+| NFC SDA | `NFC_SDA` | 16 |
+| NFC SCL | `NFC_SCL` | 17 |
+| NFC IRQ | `NFC_IRQ` | `-1` |
+
+### Kabel daya
+
+| Pin modul | ESP32 |
 |---|---|
-| GPIO 21 | SDA |
-| GPIO 22 | SCL |
-| 3.3V | VCC |
-| GND | GND |
+| VCC display/modul | 3.3V |
+| GND display/modul | GND |
 
-Default I²C addresses: `0x3C`, `0x3D`
+> Pastikan modul yang dipakai kompatibel dengan **3.3V**. GPIO **34–39 hanya input** pada ESP32, sehingga GPIO 34, 35, 36, 37, dan 39 tidak boleh digunakan sebagai output.
 
-### TFT — SPI
+### Ringkasan perbedaan utama
 
-| ESP32 GPIO | Function |
-|---|---|
-| GPIO 23 | MOSI |
-| GPIO 19 | MISO |
-| GPIO 18 | SCK |
-| GPIO 5 | CS |
-| GPIO 2 | DC |
-| GPIO 4 | RST / peripheral CS |
+| Kategori | Display bus | Pin display | Tim A/B |
+|---|---|---|---|
+| OLED | I²C | SDA 16, SCL 17, address `0x3C` | Tidak ada |
+| TFT | VSPI | SCK 18, MISO 19, MOSI 23, CS 5, DC 21, RST 22 | Ada |
 
-> Pin assignments can vary between display variants. Always check the `config.h` and hardware documentation inside the selected variant directory.
+Untuk TFT 1.77, flag build yang dipakai adalah `MRJ_DISPLAY_ST7735_177`, dengan ukuran `128 × 160`.
 
 ## 🏗️ Code Architecture
 
@@ -270,10 +364,10 @@ Available functions may include:
 Check:
 - OLED VCC → ESP32 3.3V
 - OLED GND → ESP32 GND
-- OLED SDA → GPIO 21
-- OLED SCL → GPIO 22
+- OLED SDA → GPIO 16
+- OLED SCL → GPIO 17
 
-Also check the I²C address: `0x3C`, `0x3D`
+Also check the I²C address: `0x3C`
 
 **TFT shows a white or blank screen**
 
