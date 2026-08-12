@@ -1,143 +1,423 @@
-<div align="center">
+<div align="center">⚡ MRJ FW V2
 
-# MRJ FW V2 — ESP32 Multi-Display Firmware Cabinet
+ESP32 Multi-Display Firmware Platform
 
-[![Web Platform](https://img.shields.io/badge/Web%20Hub-Live%20Preview-e5a34a?style=for-the-badge&logo=internetexplorer)](https://mrjfw-hub-4hzt3cqe.manus.space)
-[![ESP32 Core](https://img.shields.io/badge/ESP32-Core%20v2.0.17-blue?style=for-the-badge&logo=espressif)](https://github.com/espressif/arduino-esp32)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
-[![Build Status](https://img.shields.io/badge/Build-Passing%20(14%2F14)-success?style=for-the-badge)]()
+Modular · Fast · Configurable · Maker Friendly
 
-*Firmware modular tingkat lanjut untuk ESP32 yang mendukung 14 varian display (OLED & TFT), manajemen eksklusif Tim A/B, Web Server built-in, serta analisis BLE/WiFi.*
+<br>""ESP32" (https://img.shields.io/badge/ESP32-DevKit%20V1-0A7BFF?style=for-the-badge&logo=espressif)" (https://www.espressif.com/)
+""Firmware" (https://img.shields.io/badge/Firmware-v2.1.0-7C3AED?style=for-the-badge)"
+""Displays" (https://img.shields.io/badge/Displays-14%20Variants-00A86B?style=for-the-badge)"
+""Build" (https://img.shields.io/badge/Build-Passing-00C853?style=for-the-badge)"
+""License" (https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)"
 
-[Website Resmi & Katalog BIN](https://mrjfw-hub-4hzt3cqe.manus.space)
+<br><br>
 
-</div>
+""🌐 OPEN WEB" (https://img.shields.io/badge/🌐%20OPEN%20WEB-Visit%20Website-e5a34a?style=for-the-badge&logo=googlechrome)" (ISI_LINK_WEB_KAMU)
 
----
+<br><br>
 
-![MRJ FW V2 Blueprint](mrj.png)
+<img src="mrj.png" alt="MRJ FW V2" width="900"><br>⚡ Universal ESP32 Display Firmware
 
----
+OLED • TFT • SPI • I²C • Web • Wireless • Modular
 
-## 📋 Daftar Isi
-1. [Tentang Proyek](#tentang-proyek)
-2. [Fitur Utama](#fitur-utama)
-3. [Daftar 14 Varian Firmware](#daftar-14-varian-firmware)
-4. [Katalog Varian OLED (Family A)](#katalog-varian-oled-family-a)
-5. [Katalog Varian TFT & Aturan Tim A/B (Family B)](#katalog-varian-tft--aturan-tim-ab-family-b)
-6. [Pinout & Skema Kabel ESP32](#pinout--skema-kabel-esp32)
-7. [Library yang Diperlukan](#library-yang-diperlukan)
-8. [Panduan Flashing (`esptool.py`)](#panduan-flashing-esptoolpy)
-9. [Badges & Footer](#badges--footer)
+</div>---
 
----
+🧭 Navigation
 
-## 🚀 Tentang Proyek
-
-**MRJ FW V2** adalah penyempurnaan dari firmware modular ESP32 yang dirancang khusus untuk para *maker*, teknisi, dan *embedded developer* di meja kerja. Proyek ini memuat **14 varian firmware** siap kompilasi dan siap *flash* (.bin), terbagi atas **5 varian display OLED** berbasis I²C dan **9 varian display TFT** berbasis SPI.
-
-Seluruh kode telah dioptimalkan untuk menggunakan partisi *Huge App* (3MB) agar muat menampung modul Web Server asinkron, manajemen EEPROM, buzzer PWM, serta analisis Bluetooth/Wi-Fi tanpa kendala memori.
+"🚀 About" (#-about-mrj-fw-v2) ·
+"✨ Features" (#-features) ·
+"🖥️ Displays" (#️-display-support) ·
+"🔌 Pinout" (#-pinout) ·
+"🏗️ Architecture" (#️-architecture) ·
+"📚 Libraries" (#-libraries) ·
+"⚙️ Build" (#️-build) ·
+"⚡ Flash" (#-flash) ·
+"📁 Structure" (#-project-structure) ·
+"📊 Status" (#-project-status)
 
 ---
 
-## ✨ Fitur Utama
+🚀 About MRJ FW V2
 
-- **14 Varian Display Terpetakan:** Dari OLED 0.96" hingga TFT 3.5" (termasuk varian baru TFT 1.77" ST7735 dan TFT_eSPI ILI9488).
-- **Sistem Eksklusif Tim A/B (Mutex SPI):** Khusus pada varian TFT, jalur SPI bersama (VSPI) dikelola secara ketat dengan sistem Tim A/B agar tidak terjadi konflik data antar modul.
-- **Async Web Server:** Memungkinkan pengaturan dan pemantauan perangkat langsung via browser di jaringan lokal.
-- **BLE & Wi-Fi Analyzer:** Fitur pemindaian perangkat nirkabel langsung dari mikrokontroler.
-- **BadUSB & GPIO Control:** Modul kendali periferal untuk pengujian sistem tertanam.
+MRJ FW V2 adalah platform firmware modular untuk ESP32 DevKit V1 yang mendukung berbagai jenis OLED dan TFT display dalam satu ekosistem.
 
----
+Project ini dibuat untuk maker, embedded developer, teknisi, dan eksperimen elektronik dengan fokus pada struktur firmware yang modular dan mudah dikembangkan.
 
-## 📦 Daftar 14 Varian Firmware
+🧠 Core System
 
-| No | Nama Varian | Kategori | Driver | Resolusi | Antarmuka | Status Mutex |
-|----|-------------|----------|--------|----------|-----------|--------------|
-| 1 | `OLED_096_SSD1306_128x64` | OLED | SSD1306 | 128×64 | I²C | Bebas |
-| 2 | `OLED_13_SSD1306_128x64` | OLED | SSD1306 | 128×64 | I²C | Bebas |
-| 3 | `OLED_15_SH1106_128x64` | OLED | SH1106 | 128×64 | I²C | Bebas |
-| 4 | `OLED_20_SSD1306_128x64` | OLED | SSD1306 | 128×64 | I²C | Bebas |
-| 5 | `OLED_242_SH1106_128x64` | OLED | SH1106 | 128×64 | I²C | Bebas |
-| 6 | `TFT_13_ST7789_240x240` | TFT | ST7789 | 240×240 | SPI | Tim A/B |
-| 7 | `TFT_154_ST7789_240x240` | TFT | ST7789 | 240×240 | SPI | Tim A/B |
-| 8 | `TFT_177_ST7735_128x160` | TFT | ST7735 / ST7735S | 128×160 | SPI | Tim A/B |
-| 9 | `TFT_18_ST7735_128x160` | TFT | ST7735 | 128×160 | SPI | Tim A/B |
-| 10 | `TFT_20_ST7789_240x320` | TFT | ST7789 | 240×320 | SPI | Tim A/B |
-| 11 | `TFT_24_ILI9341_240x320` | TFT | ILI9341 | 240×320 | SPI | Tim A/B |
-| 12 | `TFT_24_ST7789_240x320` | TFT | ST7789 | 240×320 | SPI | Tim A/B |
-| 13 | `TFT_28_ILI9341_240x320` | TFT | ILI9341 | 240×320 | SPI | Tim A/B |
-| 14 | `TFT_35_ILI9488_TFT_eSPI` | TFT | ILI9488 / TFT_eSPI | 320×480 | SPI | Tim A/B |
+                         ⚡ MRJ FW V2
+                              │
+          ┌───────────────────┼───────────────────┐
+          │                   │                   │
+       🖥️ DISPLAY           🌐 WEB              📡 WIRELESS
+          │                   │                   │
+      OLED / TFT         Async Server       Wi-Fi / BLE
+          │                   │                   │
+          └───────────────────┼───────────────────┘
+                              │
+                     ┌────────┴────────┐
+                     │                 │
+                  💾 STORAGE        🔌 HARDWARE
+                     │                 │
+                 SD / EEPROM      GPIO / Modules
 
 ---
 
-## 🔌 Pinout & Skema Kabel ESP32
+✨ Features
 
-### 1. Bus I²C (Khusus Varian OLED)
-| Pin ESP32 | Pin OLED | Keterangan |
-|-----------|----------|------------|
-| **GPIO 21** | SDA | Serial Data |
-| **GPIO 22** | SCL | Serial Clock |
-| **3V3** | VCC | Daya 3.3V |
-| **GND** | GND | Ground |
+🖥️ Display System
 
-### 2. Bus VSPI / SPI (Khusus Varian TFT & Aturan Tim A/B)
-| Pin ESP32 | Pin TFT / Periferal SPI | Keterangan |
-|-----------|--------------------------|------------|
-| **GPIO 23** | MOSI (SDA) | Master Out Slave In |
-| **GPIO 19** | MISO | Master In Slave Out (opsional untuk SD Card) |
-| **GPIO 18** | SCLK (SCK) | Serial Clock |
-| **GPIO 5** | TFT_CS | Chip Select Display |
-| **GPIO 2** | TFT_DC (RS) | Data / Command Control |
-| **GPIO 4** | SD_CS | Chip Select SD Card (jika ada) |
-| **GPIO 21** | TP_CS | Touch Panel Chip Select (pada layar sentuh) |
-| **EN / RST** | RESET | Reset Display |
+- 14 display variants
+- OLED SSD1306
+- OLED SH1106
+- TFT ST7735
+- TFT ST7789
+- TFT ILI9341
+- TFT ILI9488
+- TFT_eSPI support
+- Resolution hingga 320×480
+- Modular display architecture
 
-> **Catatan Aturan Tim A/B pada TFT:** Dua kelompok modul memakai jalur SPI bersama. Sistem Tim A/B menjaga dua modul tetap eksklusif: saat satu grup aktif (Team A), grup satunya berada dalam kondisi non-aktif (Team B). OLED tidak memerlukan mekanisme ini.
+🌐 Web Interface
 
----
+- Local Web UI
+- Async Web Server
+- Device control
+- Configuration interface
+- Status monitoring
 
-## 📚 Library yang Diperlukan
+📡 Wireless
 
-Untuk melakukan kompilasi manual melalui Arduino IDE atau Arduino CLI, pastikan library berikut sudah terinstal:
-1. `Adafruit GFX Library` (v1.11+)
-2. `Adafruit SSD1306` (untuk varian OLED SSD1306)
-3. `Adafruit SH110X` (untuk varian OLED SH1106)
-4. `Adafruit ST7735 and ST7789 Library` (untuk varian TFT ST7735 & ST7789)
-5. `Adafruit ILI9341` (untuk varian TFT ILI9341)
-6. `TFT_eSPI` oleh Bodmer (khusus varian TFT 3.5" ILI9488)
-7. `ESPAsyncWebServer` & `AsyncTCP` (untuk server web asinkron)
-8. `ArduinoJson` (v6.x)
+- Wi-Fi scanner
+- BLE scanner
+- Wireless analyzer modules
+- Modular wireless architecture
 
----
+💾 Storage
 
-## ⚡ Panduan Flashing (`esptool.py`)
+- SD Card support
+- EEPROM configuration
+- OTA architecture
+- Logging system
 
-Gunakan perintah berikut untuk mem-flash file `.bin` ke ESP32 Anda melalui port serial:
+🔌 Hardware
 
-```bash
-esptool.py --chip esp32 --port /dev/ttyUSB0 --baud 921600 write_flash 0x10000 nama_file_varian.bin
-```
-*(Ganti `/dev/ttyUSB0` dengan port serial perangkat Anda, misal `COM3` di Windows).*
-
----
-
-## 🌐 Tautan Web & Sumber Daya
-
-- **Website Resmi & Katalog Interaktif:** [https://mrjfw-hub-4hzt3cqe.manus.space](https://mrjfw-hub-4hzt3cqe.manus.space)
-- **Dokumentasi & QA Visual:** Lihat folder proyek untuk laporan pengujian antarmuka.
+- GPIO control
+- Buzzer
+- Touch input
+- IR remote
+- iButton
+- NFC
+- RFID
+- Sub-GHz
+- Battery monitoring
 
 ---
 
-## 🏷️ Badges & Footer
+🖥️ Display Support
 
-<div align="center">
+🟢 OLED Family — I²C
 
-![ESP32 Status](https://img.shields.io/badge/ESP32-Ready%20to%20Flash-orange?style=flat-square&logo=espressif)
-![Firmware Version](https://img.shields.io/badge/Firmware-MRJ%20FW%20V2-blueviolet?style=flat-square)
-![Variants Count](https://img.shields.io/badge/Variants-14%20Displays-success?style=flat-square)
+Variant| Driver| Resolution| Interface
+"OLED_096_SSD1306_128x64"| SSD1306| 128×64| I²C
+"OLED_13_SSD1306_128x64"| SSD1306| 128×64| I²C
+"OLED_15_SH1106_128x64"| SH1106| 128×64| I²C
+"OLED_20_SSD1306_128x64"| SSD1306| 128×64| I²C
+"OLED_242_SH1106_128x64"| SH1106| 128×64| I²C
 
-*Dibuat dengan presisi untuk para pengembang perangkat keras.*  
-*(c) 2026 MRJ Embedded Systems & Manus AI.*
+🔵 TFT Family — SPI
+
+Variant| Driver| Resolution| Interface
+"TFT_13_ST7789_240x240"| ST7789| 240×240| SPI
+"TFT_154_ST7789_240x240"| ST7789| 240×240| SPI
+"TFT_177_ST7735_128x160"| ST7735/S| 128×160| SPI
+"TFT_18_ST7735_128x160"| ST7735| 128×160| SPI
+"TFT_20_ST7789_240x320"| ST7789| 240×320| SPI
+"TFT_24_ILI9341_240x320"| ILI9341| 240×320| SPI
+"TFT_24_ST7789_240x320"| ST7789| 240×320| SPI
+"TFT_28_ILI9341_240x320"| ILI9341| 240×320| SPI
+"TFT_35_ILI9488_TFT_eSPI"| ILI9488| 320×480| SPI
+
+«14 display variants · One firmware ecosystem»
+
+---
+
+🔌 Pinout
+
+I²C Bus
+
+ESP32 Pin| Peripheral| Function
+GPIO 21| SDA| I²C Data
+GPIO 22| SCL| I²C Clock
+3.3V| VCC| Power
+GND| GND| Ground
+
+VSPI Bus
+
+ESP32 Pin| Peripheral| Function
+GPIO 23| MOSI| SPI Data
+GPIO 19| MISO| SPI Input
+GPIO 18| SCK| SPI Clock
+GPIO 5| TFT_CS| Display Select
+GPIO 2| TFT_DC| Data / Command
+GPIO 4| SD_CS| SD Select
+GPIO 21| TP_CS| Touch Select
+
+🔐 Team A/B SPI Management
+
+Peripheral yang menggunakan bus SPI bersama dikelola menggunakan sistem Team A/B.
+
+                       ESP32
+                         │
+                      VSPI BUS
+                         │
+              ┌──────────┴──────────┐
+              │                     │
+           TEAM A                 TEAM B
+              │                     │
+           ACTIVE                STANDBY
+              │                     │
+              └──────────┬──────────┘
+                         │
+                    SPI Manager
+
+Sistem ini membantu mengatur akses peripheral agar tidak terjadi konflik ketika bus SPI digunakan bersama.
+
+---
+
+🏗️ Architecture
+
+MRJ FW V2 menggunakan struktur modular sehingga komponen firmware dapat dikembangkan secara terpisah.
+
+                         MRJ FW V2
+                            │
+       ┌────────────────────┼────────────────────┐
+       │                    │                    │
+    DISPLAY               CORE                  WEB
+       │                    │                    │
+ ┌─────┴─────┐       ┌──────┴──────┐       ┌─────┴─────┐
+ │ OLED      │       │ Config      │       │ Async     │
+ │ TFT       │       │ EEPROM      │       │ Web UI    │
+ │ Drivers   │       │ Logger      │       │ API       │
+ └───────────┘       │ Storage     │       └───────────┘
+                     └──────┬──────┘
+                            │
+              ┌─────────────┼─────────────┐
+              │             │             │
+            Wi-Fi          BLE        Hardware
+              │             │             │
+           Scanner       Scanner      Modules
+
+---
+
+📚 Libraries
+
+Library utama yang digunakan:
+
+- "Adafruit GFX Library"
+- "Adafruit SSD1306"
+- "Adafruit SH110X"
+- "Adafruit ST7735 and ST7789 Library"
+- "Adafruit ILI9341"
+- "TFT_eSPI"
+- "ESPAsyncWebServer"
+- "AsyncTCP"
+- "ArduinoJson"
+- "U8g2"
+
+---
+
+⚙️ Build
+
+PlatformIO
+
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+
+monitor_speed = 115200
+upload_speed = 921600
+
+board_build.f_cpu = 240000000L
+
+Build
+
+pio run
+
+Upload
+
+pio run -t upload
+
+Serial Monitor
+
+pio device monitor
+
+---
+
+⚡ Flash
+
+Jika sudah memiliki file firmware ".bin":
+
+esptool.py \
+  --chip esp32 \
+  --port /dev/ttyUSB0 \
+  --baud 921600 \
+  write_flash 0x10000 firmware.bin
+
+Jika koneksi tidak stabil:
+
+esptool.py \
+  --chip esp32 \
+  --port /dev/ttyUSB0 \
+  --baud 460800 \
+  write_flash 0x10000 firmware.bin
+
+«Note: Gunakan alamat flash yang sesuai dengan hasil build firmware. Untuk project dengan bootloader dan partition table khusus, ikuti alamat yang diberikan oleh build system.»
+
+---
+
+📁 Project Structure
+
+MRJ-V2/
+│
+├── .github/
+│   └── workflows/
+│       └── build-firmware.yml
+│
+├── oled_variants/
+│   ├── OLED_096_SSD1306_128x64/
+│   ├── OLED_13_SSD1306_128x64/
+│   ├── OLED_15_SH1106_128x64/
+│   ├── OLED_20_SSD1306_128x64/
+│   └── OLED_242_SH1106_128x64/
+│
+├── tft_source_zips/
+│   ├── TFT_13_ST7789_240x240_source.zip
+│   ├── TFT_154_ST7789_240x240_source.zip
+│   ├── TFT_177_ST7735_128x160_source.zip
+│   ├── TFT_18_ST7735_128x160_source.zip
+│   ├── TFT_20_ST7789_240x320_source.zip
+│   ├── TFT_24_ILI9341_240x320_source.zip
+│   ├── TFT_24_ST7789_240x320_source.zip
+│   ├── TFT_28_ILI9341_240x320_source.zip
+│   └── TFT_35_ILI9488_TFT_eSPI_source.zip
+│
+├── src/
+│   ├── MRJ_FW_V2.ino
+│   ├── config.h
+│   ├── hardware_pinout.h
+│   ├── display.cpp
+│   ├── display.h
+│   ├── web_server.cpp
+│   ├── web_server.h
+│   ├── wifi_scanner.cpp
+│   ├── ble_module.cpp
+│   ├── sd_card.cpp
+│   ├── eeprom_manager.cpp
+│   ├── logger.cpp
+│   └── ...
+│
+├── mrj.png
+├── platformio.ini
+├── README.md
+└── LICENSE
+
+---
+
+📊 Project Status
+
+Component| Status
+🖥️ OLED Family| ✅
+📺 TFT Family| ✅
+ST7735| ✅
+ST7789| ✅
+ILI9341| ✅
+ILI9488| ✅
+🌐 Web Server| ✅
+📡 Wi-Fi Scanner| ✅
+🔵 BLE Module| ✅
+💾 SD Card| ✅
+🧠 EEPROM| ✅
+🔄 OTA| ✅
+🔌 GPIO| ✅
+⚡ SPI Manager| ✅
+🤖 Modular Architecture| ✅
+
+---
+
+🛠️ Troubleshooting
+
+OLED tidak menyala
+
+Periksa:
+
+SDA → GPIO 21
+SCL → GPIO 22
+VCC → 3.3V
+GND → GND
+
+Alamat I²C umum:
+
+0x3C
+0x3D
+
+TFT blank / white screen
+
+Periksa:
+
+MOSI
+SCK
+CS
+DC
+RST
+VCC
+GND
+
+Pastikan driver dan konfigurasi pin sesuai dengan display yang digunakan.
+
+Upload gagal
+
+Coba:
+
+pio run -t upload
+
+atau gunakan baud lebih rendah:
+
+460800
+
+---
+
+🤝 Contributing
+
+Kontribusi untuk driver display, modul hardware, dokumentasi, optimasi firmware, dan improvement lainnya dipersilakan.
+
+Sebelum Pull Request:
+
+- Pastikan project berhasil di-build.
+- Dokumentasikan perubahan.
+- Periksa pinout.
+- Periksa dependency.
+- Pastikan varian display lain tidak rusak.
+
+---
+
+📄 License
+
+Released under the MIT License.
+
+---
+
+<div align="center">⚡ MRJ FW V2
+
+Multi-Display Firmware for ESP32
+
+Build · Flash · Configure · Create
+
+<br>🌐 WEB
+
+""OPEN WEB" (https://img.shields.io/badge/🌐%20OPEN%20WEB-Visit%20Website-e5a34a?style=for-the-badge&logo=googlechrome)" (ISI_LINK_WEB_KAMU)
+
+<br>"MRJ FW V2 · ESP32 · 14 Display Variants"
 
 </div>
