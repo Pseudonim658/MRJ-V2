@@ -446,7 +446,37 @@ MRJ FW V2 uses and/or builds upon technologies from:
 - ESP32 Arduino Core
 
 Thanks to the open-source community and everyone contributing to ESP32 development.
+## ⚠️ Security & Responsible Use Warning
 
+«IMPORTANT: MRJ FW V2 includes wireless and network security-related features intended for authorized security testing, research, education, and diagnostics only.»
+
+Use this firmware only on devices, networks, and wireless environments that you own or have explicit permission to test.
+
+Do not use MRJ FW V2 to:
+
+- Disrupt or interfere with networks or devices without authorization.
+- Disconnect or deny service to other users.
+- Access systems or networks without permission.
+- Capture, modify, or interfere with communications belonging to others.
+
+The developer is not responsible for misuse, damage, service disruption, or unauthorized activity resulting from this software.
+
+By using MRJ FW V2, you agree to use it responsibly and comply with all applicable laws and regulations.
+## ⚠️ Experimental Feature Warning
+
+Some features included in MRJ FW V2 are experimental and have not been fully tested or verified on all supported hardware.
+
+Results may vary depending on:
+
+- ESP32 board
+- Connected modules
+- Display configuration
+- Firmware configuration
+- Hardware wiring
+
+Use experimental features at your own risk. Always test on hardware and networks that you own or have explicit permission to test.
+
+If you encounter a problem, please open an Issue and include the hardware configuration, firmware version, and relevant logs.
 <div align="center">
 
 **⚡ MRJ FW V2** — One firmware platform for multiple ESP32 displays.
