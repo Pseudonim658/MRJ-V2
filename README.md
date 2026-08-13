@@ -481,6 +481,6 @@ If you encounter a problem, please open an Issue and include the hardware config
 
 **⚡ MRJ FW V2** — One firmware platform for multiple ESP32 displays.
 
-© 2026 MRJ Team
+© 2026 psedonim
 
-</div>
+</div> 
