@@ -17,7 +17,7 @@
 
 *Modular · Fast · Configurable · Maker Friendly*
 
-**🌐 [mrj-fw.my.id](https://mrj-fw.my.id)** — Project information, documentation, firmware information, and demos.
+**🌐 [https://mrj-cloud-flash.vercel.app/](https://mrj-cloud-flash.vercel.app/)** — Project information, documentation, firmware information, and demos.
 
 </div>
 
